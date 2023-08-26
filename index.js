@@ -1,10 +1,10 @@
-import Express from "express";
+import Express from 'express';
 const app = Express();
 
-app.get("/", (req, res) => {
-    res.send("hello novo");1
-})
+app.get('/', (req, res) => {
+  res.send('hello novo');
+});
 
-app.listen(8080, function(){
-    console.log("servidpr rodando")
-})
+app.listen(8080, function () {
+  console.log('servidpr rodando');
+});
