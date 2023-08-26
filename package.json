@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx nodemon src/index.js",
-    "start": "node index.js",
+    "start": "node src/index.js",
     "lint:fix": "npx eslint ./src --ext .js --fix --ignore-path ./.gitignore",
     "lint:format": "npx prettier --loglevel warn --write \"./**/*.{js,ts}\"",
     "lint": "npm run lint:format && npm run lint:fix",
