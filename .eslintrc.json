@@ -1,6 +1,10 @@
 {
     "extends" : ["eslint:recommended", "plugin:node/recommended"],
     "plugins" : ["prettier"],
+    "parser": "babel-eslint", 
+    "parserOptions": {
+        "sourceType": "module"
+      },
     "rules": {
         "prettier/prettier": [
             "error",
