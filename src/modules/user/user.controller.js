@@ -2,7 +2,6 @@ import Router from 'express';
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-
 const userRouter = Router();
 const router = Router();
 
@@ -16,11 +15,11 @@ userRouter.use('/user', router);
 
 //   res.send(user);
 // });
-console.log('chamou a router get')
+console.log('chamou a router get');
 
 userRouter.get('/user', async (req, res) => {
   try {
-    console.log('entrou aqui mo router get')
+    console.log('entrou aqui mo router get');
     const users = await prisma.user.findMany();
 
     // Certifique-se de que users seja um array de objetos
@@ -39,7 +38,4 @@ userRouter.get('/user', async (req, res) => {
   }
 });
 
-
 export default userRouter;
-
-

@@ -8,4 +8,3 @@ routerLoader(app);
 app.listen(8080, function () {
   console.log('servidpr rodando');
 });
-

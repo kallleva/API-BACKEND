@@ -6,11 +6,12 @@ import fs from 'fs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-console.log(" __dirname =--- >> " + __dirname);
+console.log(' __dirname =--- >> ' + __dirname);
 
-export const routerLoader = async (app) => { // Tornar a função assíncrona
+export const routerLoader = async (app) => {
+  // Tornar a função assíncrona
   const modulesPath = path.resolve(__dirname, 'modules');
-  console.log(" modulesPath -->> " + modulesPath);
+  console.log(' modulesPath -->> ' + modulesPath);
 
   try {
     const moduleDirs = fs.readdirSync(modulesPath);
