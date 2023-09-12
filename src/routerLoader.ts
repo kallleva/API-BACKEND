@@ -1,14 +1,11 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
-
-// Obtenha o caminho do arquivo atual
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { Express } from 'express'; // Importe o tipo Express
 
 console.log(' __dirname =--- >> ' + __dirname);
 
-export const routerLoader = async (app) => {
+export const routerLoader = async (app: Express) => {
   // Tornar a função assíncrona
   const modulesPath = path.resolve(__dirname, 'modules');
   console.log(' modulesPath -->> ' + modulesPath);
@@ -17,12 +14,11 @@ export const routerLoader = async (app) => {
     const moduleDirs = fs.readdirSync(modulesPath);
 
     for (const dir of moduleDirs) {
-      const controllerpath = path.join(modulesPath, dir, `${dir}.controller.js`);
+      const controllerpath = path.join(modulesPath, dir, `${dir}.controller.ts`);
       console.log(' controllerpath antes di if-->> ' + controllerpath);
 
       if (fs.existsSync(controllerpath)) {
-        const moduleURL = new URL(`file://${controllerpath}`);
-        const module = await import(moduleURL);
+        const module = await import(controllerpath);
         console.log(' controllerpath -->> ' + controllerpath);
 
         if (module.default && typeof module.default === 'function') {
