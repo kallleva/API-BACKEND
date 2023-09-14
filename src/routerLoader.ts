@@ -1,11 +1,11 @@
 import path from 'path';
-import { fileURLToPath } from 'url';
+
 import fs from 'fs';
 import { Express } from 'express'; // Importe o tipo Express
 
 console.log(' __dirname =--- >> ' + __dirname);
 
-export const routerLoader = async (app: Express) => {
+export const routerLoader = async (app: Express): Promise<void> => {
   // Tornar a função assíncrona
   const modulesPath = path.resolve(__dirname, 'modules');
   console.log(' modulesPath -->> ' + modulesPath);
