@@ -6,7 +6,7 @@ datasource db {
 model User {
     user_id         Int         @id @default(autoincrement())
     user_name       String       
-    user_emauil     String       @unique
+    user_email     String       @unique
     user_cpf        String       @unique
     user_password   String       
     user_phone      String    

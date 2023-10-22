@@ -2,7 +2,7 @@
 CREATE TABLE "User" (
     "user_id" SERIAL NOT NULL,
     "user_name" TEXT NOT NULL,
-    "user_emauil" TEXT NOT NULL,
+    "user_email" TEXT NOT NULL,
     "user_cpf" TEXT NOT NULL,
     "user_password" TEXT NOT NULL,
     "user_phone" TEXT NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE "User" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_user_emauil_key" ON "User"("user_emauil");
+CREATE UNIQUE INDEX "User_user_emauil_key" ON "User"("user_email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_user_cpf_key" ON "User"("user_cpf");
