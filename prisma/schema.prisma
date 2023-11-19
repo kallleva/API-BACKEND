@@ -1,20 +1,114 @@
 datasource db {
-    provider =  "postgresql"
-    url = "postgresql://postgres:laura2018@localhost:5432/vendas03"
+  provider = "postgresql"
+  url      = "postgresql://postgres:laura2018@localhost:5432/vendas03"
 }
 
 model User {
-    user_id         Int         @id @default(autoincrement())
-    user_name       String       
-    user_email     String       @unique
-    user_cpf        String       @unique
-    user_password   String       
-    user_phone      String    
-    user_typeuser   Int
-    user_createdAt  DateTime     @default(now())
-    user_updatedAt  DateTime     @updatedAt
+  user_id        Int      @id @default(autoincrement())
+  user_name      String
+  user_email     String   @unique
+  user_cpf       String   @unique
+  user_password  String
+  user_phone     String
+  user_typeuser  Int
+  user_createdAt DateTime @default(now())
+  user_updatedAt DateTime @updatedAt
+}
+
+model Product {
+  product_id        Int           @id @default(autoincrement())
+  product_sub_id    Int
+  product_nome      String        @unique
+  product_valor     Float
+  product_imagem_id Int
+  product_marca     Int
+  product_descricao String
+  user_createdAt    DateTime      @default(now())
+  user_updatedAt    DateTime      @updatedAt
+  sub_categoria     sub_categoria @relation(fields: [product_sub_id], references: [sub_categoria_id])
+  Pedido_item       Pedido_item[] // Adicione a relação oposta
+  imagem_item       imagem_item[]
+}
+
+model categoria {
+  categoria_id        Int             @id @default(autoincrement())
+  categoria_nome      String          @unique
+  categoria_createdAt DateTime        @default(now())
+  categoria_updatedAt DateTime        @updatedAt
+  sub_categorias      sub_categoria[]
+}
+
+model sub_categoria {
+  sub_categoria_id        Int       @id @default(autoincrement())
+  categoria_id            Int
+  sub_categoria_nome      String    @unique
+  sub_categoria_createdAt DateTime  @default(now())
+  sub_categoria_updatedAt DateTime  @updatedAt
+  categoria               categoria @relation(fields: [categoria_id], references: [categoria_id])
+  produtos                Product[] // Adicionamos uma relação para os produtos associados a esta subcategoria
+}
+
+model imagem {
+  imagem_id           Int           @id @default(autoincrement())
+  imagem_path         String
+  categoria_createdAt DateTime      @default(now())
+  categoria_updatedAt DateTime      @updatedAt
+  imagem_item         imagem_item[]
+}
+
+model imagem_item {
+  imagem_item_id          Int      @id @default(autoincrement())
+  imagem_id               Int
+  product_id              Int
+  sub_categoria_nome      String   @unique
+  sub_categoria_createdAt DateTime @default(now())
+  sub_categoria_updatedAt DateTime @updatedAt
+  imagem                  imagem   @relation(fields: [imagem_id], references: [imagem_id])
+  product                 Product  @relation(fields: [product_id], references: [product_id])
+}
+
+model Cliente {
+  cliente_id        Int      @id @default(autoincrement())
+  cliente_name      String
+  cliente_email     String
+  cliente_cpf       String
+  cliente_phone     String
+  cliente_createdAt DateTime @default(now())
+  cliente_updatedAt DateTime @updatedAt
+  Pedido            Pedido[]
+}
+
+model Pedido {
+  pedido_id          Int            @id @default(autoincrement())
+  cliente_id         Int
+  pedido_status      String
+  pedido_valor_total Float
+  pedido_frete_total Float
+  pedido_data        DateTime       @default(now())
+  tipo_pagamento_id  Int
+  Cliente            Cliente        @relation(fields: [cliente_id], references: [cliente_id])
+  Tipo_Pagamento     Tipo_Pagamento @relation(fields: [tipo_pagamento_id], references: [tipo_pagamento_id])
+  Pedido_item        Pedido_item[]
+}
+
+model Pedido_item {
+  Pedido_item_id    Int     @id @default(autoincrement())
+  pedido_id         Int
+  product_id        Int
+  Pedido            Pedido  @relation(fields: [pedido_id], references: [pedido_id])
+  Product           Product @relation(fields: [product_id], references: [product_id])
+  Pedido_item_valor Float
+  Pedido_item_qtd   Int
+}
+
+model Tipo_Pagamento {
+  tipo_pagamento_id        Int      @id @default(autoincrement())
+  tipo_pagamento_name      String
+  tipo_pagamento_createdAt DateTime @default(now())
+  tipo_pagamento_updatedAt DateTime @updatedAt
+  Pedido                   Pedido[] // Adicione a relação oposta
 }
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }

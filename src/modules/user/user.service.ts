@@ -4,6 +4,7 @@ import { UserInsertDTO } from './dtos/users-inset.dto';
 import { NotFoundException } from '@exceptions/not-found-exception';
 import { BadRequestException } from '@exceptions/bad-request-exception';
 import { createPassordHashed } from '@utils/password';
+import { UserEditPasswordDTO } from './dtos/user-edit-password.dto';
 
 const prisma = new PrismaClient();
 
@@ -63,4 +64,34 @@ export const getUserByCPF = async (user_cpf: string): Promise<UserModel | null> 
     throw new NotFoundException('User');
   }
   return user;
+};
+
+export const getUserById = async (user_id: number): Promise<UserModel> => {
+  const user = await prisma.user.findFirst({
+    where: {
+      user_id,
+    },
+  });
+
+  if (!user) {
+    throw new NotFoundException('User');
+  }
+  return user;
+};
+
+export const EditPassoword = async (
+  user_Id: number,
+  userEditPasswordDTO: UserEditPasswordDTO,
+): Promise<UserModel> => {
+  const user = await getUserById(user_Id);
+
+  const newUser = {
+    ...user,
+    user_password: await createPassordHashed(userEditPasswordDTO.user_password),
+  };
+
+  return prisma.user.update({
+    where: { user_id: user_Id },
+    data: newUser,
+  });
 };

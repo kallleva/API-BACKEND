@@ -5,6 +5,8 @@ import { UserAuth } from '@modules/auth/dtos/user-auth.dto';
 import { veryfyToken } from '@utils/auth';
 import { NextFunction, Request, Response } from 'express';
 
+console.log('entrou aqui mo autorizarion inicio');
+
 export const authAdminMiddleware = async (
   req: Request,
   res: Response,
@@ -17,9 +19,11 @@ export const authAdminMiddleware = async (
     if (user.user_typeuser !== UserTypeEnum.ADMIN) {
       new ReturnError(res, new UnauthorizedException());
     } else {
+      console.log('entrou aqui mo autorizarion');
       next();
     }
   } catch (error) {
+    console.log('entrou aqui mo error');
     new ReturnError(res, error);
   }
 };

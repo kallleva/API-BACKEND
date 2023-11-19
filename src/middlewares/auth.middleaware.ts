@@ -10,6 +10,7 @@ export const authMiddleware = async (
   const autorizacao = req.headers.authorization;
 
   try {
+    console.log(' autorizacao -->>' + autorizacao?.toString);
     await veryfyToken(autorizacao);
     next();
   } catch (error) {

@@ -1,6 +1,7 @@
 import { UnauthorizedException } from '@exceptions/unauthorization';
 import { UserAuth } from '@modules/auth/dtos/user-auth.dto';
 import { UserModel } from '@modules/user/user.model';
+import { Request } from 'express';
 import { sign, verify } from 'jsonwebtoken';
 
 const PASSWORD_JWT = 'umasenhatrocar';
@@ -33,4 +34,9 @@ export const veryfyToken = async (authorization?: string): Promise<UserAuth> => 
   } catch {
     throw new UnauthorizedException();
   }
+};
+
+export const GetUserByToken = async (req: Request): Promise<UserAuth> => {
+  const autorizacao = req.headers.authorization;
+  return veryfyToken(autorizacao);
 };
